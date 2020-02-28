@@ -2,13 +2,13 @@
 namespace Codeception\Lib\Connector;
 
 use Codeception\Configuration;
-use Codeception\Lib\Connector\ZendExpressive\ResponseCollector;
+use Codeception\Lib\Connector\ZendMezzio\ResponseCollector;
 use Symfony\Component\BrowserKit\AbstractBrowser as Client;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\BrowserKit\Request as BrowserKitRequest;
-use Zend\Diactoros\ServerRequest;
-use Zend\Expressive\Application;
-use Zend\Diactoros\UploadedFile;
+use Laminas\Diactoros\ServerRequest;
+use Mezzio\Application;
+use Laminas\Diactoros\UploadedFile;
 
 class ZendExpressive extends Client
 {
@@ -161,11 +161,11 @@ class ZendExpressive extends Client
         $projectDir = Configuration::projectDir();
         chdir($projectDir);
         $this->container = require $projectDir . $this->config['container'];
-        $app = $this->container->get(\Zend\Expressive\Application::class);
+        $app = $this->container->get(\Mezzio\Application::class);
 
         $middlewareFactory = null;
-        if ($this->container->has(\Zend\Expressive\MiddlewareFactory::class)) {
-            $middlewareFactory = $this->container->get(\Zend\Expressive\MiddlewareFactory::class);
+        if ($this->container->has(\Mezzio\MiddlewareFactory::class)) {
+            $middlewareFactory = $this->container->get(\Mezzio\MiddlewareFactory::class);
         }
 
         $pipelineFile = $projectDir . 'config/pipeline.php';
@@ -199,7 +199,7 @@ class ZendExpressive extends Client
         }
 
         /**
-         * @var Zend\Expressive\Emitter\EmitterStack
+         * @var Mezzio\Emitter\EmitterStack
          */
         $emitterStack = $this->application->getEmitter();
         while (!$emitterStack->isEmpty()) {

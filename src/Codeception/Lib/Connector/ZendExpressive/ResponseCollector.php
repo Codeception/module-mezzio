@@ -2,7 +2,7 @@
 namespace Codeception\Lib\Connector\ZendExpressive;
 
 use Psr\Http\Message\ResponseInterface;
-use Zend\Diactoros\Response\EmitterInterface;
+use Laminas\Diactoros\Response\EmitterInterface;
 
 class ResponseCollector implements EmitterInterface
 {

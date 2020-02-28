@@ -24,7 +24,7 @@ use Codeception\Lib\Interfaces\DoctrineProvider;
  *
  * ## Public properties
  *
- * * application -  instance of `\Zend\Expressive\Application`
+ * * application -  instance of `\Mezzio\Application`
  * * container - instance of `\Interop\Container\ContainerInterface`
  * * client - BrowserKit client
  *
@@ -49,7 +49,7 @@ class ZendExpressive extends Framework implements DoctrineProvider
     public $container;
 
     /**
-     * @var \Zend\Expressive\Application
+     * @var \Mezzio\Application
      * @deprecated Doesn't work as expected if Application is recreated between requests
      */
     public $application;

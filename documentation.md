@@ -18,7 +18,7 @@ Uses `config/container.php` file by default.
 
 ## Public properties
 
-* application -  instance of `\Zend\Expressive\Application`
+* application -  instance of `\Mezzio\Application`
 * container - instance of `\Interop\Container\ContainerInterface`
 * client - BrowserKit client
 

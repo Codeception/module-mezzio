@@ -1,7 +1,7 @@
 {
     "name":"codeception/module-zendexpressive",
     "description":"Codeception module for Zend Expressive framework",
-    "keywords":["codeception", "expressive", "zend-expressive"],
+    "keywords":["codeception", "expressive", "mezzio"],
     "homepage":"http://codeception.com/",
     "type":"library",
     "license":"MIT",
@@ -20,7 +20,7 @@
     "require-dev": {
         "codeception/util-robohelpers": "dev-master",
         "codeception/module-rest": "dev-master",
-        "zendframework/zend-expressive": "~2.0 | ~3.0"
+        "mezzio/mezzio": "~2.0 | ~3.0"
     },
     "autoload":{
         "classmap": ["src/"]
