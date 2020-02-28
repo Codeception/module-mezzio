@@ -20,7 +20,7 @@
     "require-dev": {
         "codeception/util-robohelpers": "dev-master",
         "codeception/module-rest": "dev-master",
-        "mezzio/mezzio": "^3.0"
+        "mezzio/mezzio": "~2.0 | ~3.0"
     },
     "autoload":{
         "classmap": ["src/"]
