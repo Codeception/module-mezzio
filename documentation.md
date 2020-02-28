@@ -1,7 +1,7 @@
-# ZendExpressive
+# Mezzio
 
 
-This module allows you to run tests inside Zend Expressive.
+This module allows you to run tests inside Mezzio.
 
 Uses `config/container.php` file by default.
 
@@ -39,10 +39,10 @@ Use it in Helpers or GroupObject or Extension classes:
 
 ```php
 <?php
-$els = $this->getModule('ZendExpressive')->_findElements('.items');
-$els = $this->getModule('ZendExpressive')->_findElements(['name' => 'username']);
+$els = $this->getModule('Mezzio')->_findElements('.items');
+$els = $this->getModule('Mezzio')->_findElements(['name' => 'username']);
 
-$editLinks = $this->getModule('ZendExpressive')->_findElements(['link' => 'Edit']);
+$editLinks = $this->getModule('Mezzio')->_findElements(['link' => 'Edit']);
 // now you can iterate over $editLinks and check that all them have valid hrefs
 ```
 
@@ -65,7 +65,7 @@ Use it in Helpers when you want to retrieve response of request performed by ano
 // in Helper class
 public function seeResponseContains($text)
 {
-   $this->assertStringContainsString($text, $this->getModule('ZendExpressive')->_getResponseContent(), "response contains");
+   $this->assertStringContainsString($text, $this->getModule('Mezzio')->_getResponseContent(), "response contains");
 }
 ?>
 ```
@@ -85,7 +85,7 @@ Useful for testing multi-step forms on a specific step.
 <?php
 // in Helper class
 public function openCheckoutFormStep2($orderId) {
-    $this->getModule('ZendExpressive')->_loadPage('POST', '/checkout/step2', ['order' => $orderId]);
+    $this->getModule('Mezzio')->_loadPage('POST', '/checkout/step2', ['order' => $orderId]);
 }
 ?>
 ```
@@ -110,7 +110,7 @@ Returns a string with response body.
 <?php
 // in Helper class
 public function createUserByApi($name) {
-    $userData = $this->getModule('ZendExpressive')->_request('POST', '/api/v1/users', ['name' => $name]);
+    $userData = $this->getModule('Mezzio')->_request('POST', '/api/v1/users', ['name' => $name]);
     $user = json_decode($userData);
     return $user->id;
 }
@@ -137,7 +137,7 @@ To load arbitrary page for interaction, use `_loadPage` method.
 Saves page source of to a file
 
 ```php
-$this->getModule('ZendExpressive')->_savePageSource(codecept_output_dir().'page.html');
+$this->getModule('Mezzio')->_savePageSource(codecept_output_dir().'page.html');
 ```
  * `param` $filename
 
@@ -1307,4 +1307,4 @@ $I->uncheckOption('#notify');
 
  * `param` $option
 
-<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/module-zendexpressive/tree/master/src/Codeception/Module/ZendExpressive.php">Help us to improve documentation. Edit module reference</a></div>
+<p>&nbsp;</p><div class="alert alert-warning">Module reference is taken from the source code. <a href="https://github.com/Codeception/module-mezzio/tree/master/src/Codeception/Module/Mezzio.php">Help us to improve documentation. Edit module reference</a></div>

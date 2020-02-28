@@ -1,5 +1,5 @@
 <?php
-namespace Codeception\Lib\Connector\ZendExpressive;
+namespace Codeception\Lib\Connector\Mezzio;
 
 use Psr\Http\Message\ResponseInterface;
 use Laminas\Diactoros\Response\EmitterInterface;

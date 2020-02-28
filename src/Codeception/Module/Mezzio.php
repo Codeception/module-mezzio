@@ -3,11 +3,11 @@ namespace Codeception\Module;
 
 use Codeception\Lib\Framework;
 use Codeception\TestInterface;
-use Codeception\Lib\Connector\ZendExpressive as ZendExpressiveConnector;
+use Codeception\Lib\Connector\Mezzio as MezzioConnector;
 use Codeception\Lib\Interfaces\DoctrineProvider;
 
 /**
- * This module allows you to run tests inside Zend Expressive.
+ * This module allows you to run tests inside Mezzio.
  *
  * Uses `config/container.php` file by default.
  *
@@ -29,7 +29,7 @@ use Codeception\Lib\Interfaces\DoctrineProvider;
  * * client - BrowserKit client
  *
  */
-class ZendExpressive extends Framework implements DoctrineProvider
+class Mezzio extends Framework implements DoctrineProvider
 {
     protected $config = [
         'container'                          => 'config/container.php',
@@ -38,7 +38,7 @@ class ZendExpressive extends Framework implements DoctrineProvider
     ];
 
     /**
-     * @var \Codeception\Lib\Connector\ZendExpressive
+     * @var \Codeception\Lib\Connector\Mezzio
      */
     public $client;
 
@@ -56,7 +56,7 @@ class ZendExpressive extends Framework implements DoctrineProvider
 
     public function _initialize()
     {
-        $this->client = new ZendExpressiveConnector();
+        $this->client = new MezzioConnector();
         $this->client->setConfig($this->config);
 
         if ($this->config['recreateApplicationBetweenTests'] == false && $this->config['recreateApplicationBetweenRequests'] == false) {
@@ -67,7 +67,7 @@ class ZendExpressive extends Framework implements DoctrineProvider
 
     public function _before(TestInterface $test)
     {
-        $this->client = new ZendExpressiveConnector();
+        $this->client = new MezzioConnector();
         $this->client->setConfig($this->config);
 
         if ($this->config['recreateApplicationBetweenTests'] != false && $this->config['recreateApplicationBetweenRequests'] == false) {
