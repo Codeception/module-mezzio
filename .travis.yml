@@ -16,7 +16,7 @@ install:
   - '[[ -z "$CI_USER_TOKEN" ]] || composer config github-oauth.github.com ${CI_USER_TOKEN};'
   - travis_retry composer self-update && composer --version
   - travis_retry composer update --prefer-dist --no-interaction
-  - git clone -q --depth=1 -b add_coedeception_tests --recurse-submodules https://github.com/Slamdunk/codeception-mezzio-tests framework-tests
+  - git clone -q --depth=1 -b master --recurse-submodules https://github.com/Slamdunk/codeception-mezzio-tests framework-tests
   - git --git-dir framework-tests/.git log -n 1
   - travis_retry composer update -d framework-tests --no-dev --prefer-dist --no-interaction
   - php ./vendor/bin/codecept build -c framework-tests
