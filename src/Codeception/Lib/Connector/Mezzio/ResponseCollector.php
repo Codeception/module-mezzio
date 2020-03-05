@@ -1,8 +1,8 @@
 <?php
-namespace Codeception\Lib\Connector\ZendExpressive;
+namespace Codeception\Lib\Connector\Mezzio;
 
 use Psr\Http\Message\ResponseInterface;
-use Zend\Diactoros\Response\EmitterInterface;
+use Laminas\Diactoros\Response\EmitterInterface;
 
 class ResponseCollector implements EmitterInterface
 {

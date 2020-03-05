@@ -1,11 +1,11 @@
-# Codeception module for Zend Expressive framework
+# Codeception module for Mezzio framework
 
-[![Build Status](https://travis-ci.org/Codeception/module-zendexpressive.svg?branch=master)](https://travis-ci.org/Codeception/module-zendexpressive)
+[![Build Status](https://travis-ci.org/Codeception/module-mezzio.svg?branch=master)](https://travis-ci.org/Codeception/module-mezzio)
 
 ## Installation
 
 ```
-composer require --dev "codeception/module-zendexpressive"
+composer require --dev "codeception/module-mezzio"
 ```
 
 ## Documentation

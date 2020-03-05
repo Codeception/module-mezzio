@@ -2,15 +2,15 @@
 namespace Codeception\Lib\Connector;
 
 use Codeception\Configuration;
-use Codeception\Lib\Connector\ZendExpressive\ResponseCollector;
+use Codeception\Lib\Connector\Mezzio\ResponseCollector;
 use Symfony\Component\BrowserKit\AbstractBrowser as Client;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\BrowserKit\Request as BrowserKitRequest;
-use Zend\Diactoros\ServerRequest;
-use Zend\Expressive\Application;
-use Zend\Diactoros\UploadedFile;
+use Laminas\Diactoros\ServerRequest;
+use Mezzio\Application;
+use Laminas\Diactoros\UploadedFile;
 
-class ZendExpressive extends Client
+class Mezzio extends Client
 {
 
     /**
@@ -73,7 +73,7 @@ class ZendExpressive extends Client
             }, array_keys($cookies), $cookies));
         }
 
-        $zendRequest = new ServerRequest(
+        $mezzioRequest = new ServerRequest(
             $serverParams,
             $this->convertFiles($request->getFiles()),
             $request->getUri(),
@@ -85,7 +85,7 @@ class ZendExpressive extends Client
             $postParams
         );
 
-        $this->request = $zendRequest;
+        $this->request = $mezzioRequest;
 
         $cwd = getcwd();
         chdir(codecept_root_dir());
@@ -97,11 +97,11 @@ class ZendExpressive extends Client
         }
 
         if (method_exists($application, 'handle')) {
-            //Zend Expressive v3
-            $response = $application->handle($zendRequest);
+            // Mezzio v3
+            $response = $application->handle($mezzioRequest);
         } else {
             //Older versions
-            $application->run($zendRequest);
+            $application->run($mezzioRequest);
             $response = $this->responseCollector->getResponse();
             $this->responseCollector->clearResponse();
         }
@@ -161,11 +161,11 @@ class ZendExpressive extends Client
         $projectDir = Configuration::projectDir();
         chdir($projectDir);
         $this->container = require $projectDir . $this->config['container'];
-        $app = $this->container->get(\Zend\Expressive\Application::class);
+        $app = $this->container->get(\Mezzio\Application::class);
 
         $middlewareFactory = null;
-        if ($this->container->has(\Zend\Expressive\MiddlewareFactory::class)) {
-            $middlewareFactory = $this->container->get(\Zend\Expressive\MiddlewareFactory::class);
+        if ($this->container->has(\Mezzio\MiddlewareFactory::class)) {
+            $middlewareFactory = $this->container->get(\Mezzio\MiddlewareFactory::class);
         }
 
         $pipelineFile = $projectDir . 'config/pipeline.php';
@@ -194,12 +194,12 @@ class ZendExpressive extends Client
     private function initResponseCollector()
     {
         if (!method_exists($this->application, 'getEmitter')) {
-            //Does not exist in Zend Expressive v3
+            //Does not exist in Mezzio v3
             return;
         }
 
         /**
-         * @var Zend\Expressive\Emitter\EmitterStack
+         * @var Mezzio\Emitter\EmitterStack
          */
         $emitterStack = $this->application->getEmitter();
         while (!$emitterStack->isEmpty()) {
