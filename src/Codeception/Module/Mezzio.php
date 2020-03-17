@@ -84,6 +84,9 @@ class Mezzio extends Framework implements DoctrineProvider
         if (session_status() == PHP_SESSION_ACTIVE) {
             session_write_close();
         }
+        if (isset($_SESSION)) {
+            session_unset();
+        }
 
         parent::_after($test);
     }
