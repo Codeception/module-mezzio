@@ -36,4 +36,4 @@ jobs:
     - name: Run test suite
       run: |
         php ./vendor/bin/codecept build -c framework-tests
-        php ./vendor/bin/codecept run
+        php ./vendor/bin/codecept run functional -c framework-tests
