@@ -1,6 +1,6 @@
 # Codeception module for Mezzio framework
 
-[![Build Status](https://travis-ci.org/Codeception/module-mezzio.svg?branch=master)](https://travis-ci.org/Codeception/module-mezzio)
+![Build Status](https://github.com/Codeception/module-mezzio/workflows/CI/badge.svg)
 
 ## Installation
 
