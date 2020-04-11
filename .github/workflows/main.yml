@@ -21,11 +21,15 @@ jobs:
         extensions: mbstring, php-xml, ext-dom
         coverage: none
 
+    - name: Checkout Mezzio Tests
+      uses: actions/checkout@v2
+      with:
+        repository: Slamdunk/codeception-mezzio-tests
+        path: framework-tests
+        submodules: recursive
+
     - name: Install Mezzio Tests
-      run: |
-        git clone -q --depth=1 -b master --recurse-submodules https://github.com/Slamdunk/codeception-mezzio-tests framework-tests
-        git --git-dir framework-tests/.git log -n 1
-        composer update -d framework-tests --no-dev --prefer-dist --no-interaction
+      run: composer update -d framework-tests --no-dev --prefer-dist --no-interaction
 
     - name: Validate composer.json and composer.lock
       run: composer validate
