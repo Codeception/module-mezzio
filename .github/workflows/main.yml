@@ -20,15 +20,16 @@ jobs:
         php-version: ${{ matrix.php }}
         coverage: none
 
-    - name: Checkout Mezzio Tests
+    - name: Checkout Mezzio Sample
       uses: actions/checkout@v2
       with:
         repository: Slamdunk/codeception-mezzio-tests
         path: framework-tests
         submodules: recursive
 
-    - name: Install Mezzio Tests
-      run: composer update -d framework-tests --no-dev --prefer-dist --no-interaction
+    - name: Install Mezzio Sample
+      run: composer update --no-dev --prefer-dist --no-interaction
+      working-directory: framework-tests
 
     - name: Validate composer.json and composer.lock
       run: composer validate
@@ -38,5 +39,5 @@ jobs:
 
     - name: Run test suite
       run: |
-        php ./vendor/bin/codecept build -c framework-tests
-        php ./vendor/bin/codecept run functional -c framework-tests
+        php vendor/bin/codecept build -c framework-tests
+        php vendor/bin/codecept run functional -c framework-tests
