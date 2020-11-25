@@ -27,6 +27,10 @@ jobs:
         path: framework-tests
         submodules: recursive
 
+    - name: Downgrade to composer v1
+      if: matrix.php < 7.4
+      run: composer self-update --1
+
     - name: Install Mezzio Sample
       run: composer update --no-dev --prefer-dist --no-interaction
       working-directory: framework-tests
