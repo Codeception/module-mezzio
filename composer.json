@@ -17,7 +17,6 @@
         "codeception/codeception": "^4.0"
     },
     "require-dev": {
-        "codeception/util-robohelpers": "dev-master",
         "codeception/module-rest": "dev-master",
         "mezzio/mezzio": "~2.0 | ~3.0"
     },
