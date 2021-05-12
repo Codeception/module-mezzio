@@ -7,6 +7,10 @@ A Codeception module for Mezzio framework.
 [![Total Downloads](https://poser.pugx.org/codeception/module-mezzio/downloads)](https://packagist.org/packages/codeception/module-mezzio)
 [![License](https://poser.pugx.org/codeception/module-mezzio/license)](/LICENSE)
 
+## Requirements
+
+* `PHP 7.1` or higher.
+
 ## Installation
 
 ```
