@@ -41,7 +41,7 @@ class Mezzio extends Client
      * @param BrowserKitRequest $request
      * @throws Exception
      */
-    public function doRequest($request): Response
+    public function doRequest($request)
     {
         $inputStream = fopen('php://memory', 'r+');
         $content = $request->getContent();
@@ -158,7 +158,7 @@ class Mezzio extends Client
         return $headers;
     }
 
-    public function initApplication()
+    public function initApplication(): Application
     {
         $cwd = getcwd();
         $projectDir = Configuration::projectDir();
@@ -218,7 +218,7 @@ class Mezzio extends Client
         return $this->container;
     }
 
-    public function setApplication(Application $application)
+    public function setApplication(Application $application): void
     {
         $this->application = $application;
         $this->initResponseCollector();
