@@ -1,8 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Codeception\Lib\Connector;
 
 use Codeception\Configuration;
 use Codeception\Lib\Connector\Mezzio\ResponseCollector;
+use Exception;
+use Interop\Container\ContainerInterface;
 use Symfony\Component\BrowserKit\AbstractBrowser as Client;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\BrowserKit\Request as BrowserKitRequest;
@@ -23,7 +28,7 @@ class Mezzio extends Client
     private $responseCollector;
 
     /**
-     * @var \Interop\Container\ContainerInterface
+     * @var ContainerInterface
      */
     private $container;
 
@@ -34,9 +39,7 @@ class Mezzio extends Client
 
     /**
      * @param BrowserKitRequest $request
-     *
-     * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function doRequest($request)
     {
@@ -115,7 +118,7 @@ class Mezzio extends Client
         );
     }
 
-    private function convertFiles(array $files)
+    private function convertFiles(array $files): array
     {
         $fileObjects = [];
         foreach ($files as $fieldName => $file) {
@@ -136,7 +139,7 @@ class Mezzio extends Client
         return $fileObjects;
     }
 
-    private function extractHeaders(BrowserKitRequest $request)
+    private function extractHeaders(BrowserKitRequest $request): array
     {
         $headers = [];
         $server = $request->getServer();
@@ -155,7 +158,7 @@ class Mezzio extends Client
         return $headers;
     }
 
-    public function initApplication()
+    public function initApplication(): Application
     {
         $cwd = getcwd();
         $projectDir = Configuration::projectDir();
@@ -191,7 +194,7 @@ class Mezzio extends Client
         return $app;
     }
 
-    private function initResponseCollector()
+    private function initResponseCollector(): void
     {
         if (!method_exists($this->application, 'getEmitter')) {
             //Does not exist in Mezzio v3
@@ -210,21 +213,18 @@ class Mezzio extends Client
         $emitterStack->unshift($this->responseCollector);
     }
 
-    public function getContainer()
+    public function getContainer(): ContainerInterface
     {
         return $this->container;
     }
 
-    /**
-     * @param Application
-     */
-    public function setApplication(Application $application)
+    public function setApplication(Application $application): void
     {
         $this->application = $application;
         $this->initResponseCollector();
     }
 
-    public function setConfig(array $config)
+    public function setConfig(array $config): void
     {
         $this->config = $config;
     }

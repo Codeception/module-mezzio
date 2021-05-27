@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Codeception\Module;
 
 use Codeception\Lib\Framework;
@@ -31,6 +34,9 @@ use Codeception\Lib\Interfaces\DoctrineProvider;
  */
 class Mezzio extends Framework implements DoctrineProvider
 {
+    /**
+     * @var array
+     */
     protected $config = [
         'container'                          => 'config/container.php',
         'recreateApplicationBetweenTests'    => true,
@@ -73,7 +79,7 @@ class Mezzio extends Framework implements DoctrineProvider
         if ($this->config['recreateApplicationBetweenTests'] != false && $this->config['recreateApplicationBetweenRequests'] == false) {
             $this->application = $this->client->initApplication();
             $this->container   = $this->client->getContainer();
-        } elseif (isset($this->application)) {
+        } elseif ($this->application !== null) {
             $this->client->setApplication($this->application);
         }
     }
