@@ -21,6 +21,8 @@ composer require "codeception/module-mezzio" --dev
 
 See [the module documentation](https://codeception.com/docs/modules/Mezzio).
 
+[Changelog](https://github.com/Codeception/module-mezzio/tags)
+
 ## License
 
 `Codeception Module Mezzio` is open-sourced software licensed under the [MIT](/LICENSE) License.
