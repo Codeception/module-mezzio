@@ -17,25 +17,13 @@ use Laminas\Diactoros\UploadedFile;
 
 class Mezzio extends Client
 {
+    private Application $application;
 
-    /**
-     * @var Application
-     */
-    private $application;
-    /**
-     * @var ResponseCollector
-     */
-    private $responseCollector;
+    private ResponseCollector $responseCollector;
 
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private ContainerInterface $container;
 
-    /**
-     * @var array Configuration of the module
-     */
-    private $config;
+    private array $config;
 
     /**
      * @param BrowserKitRequest $request
