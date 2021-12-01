@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace Codeception\Lib\Connector\Mezzio;
 
+use Laminas\Diactoros\Response\EmitterInterface;
 use LogicException;
 use Psr\Http\Message\ResponseInterface;
-use Laminas\Diactoros\Response\EmitterInterface;
 
 class ResponseCollector implements EmitterInterface
 {
-    /**
-     * @var ResponseInterface
-     */
-    private $response;
+    private ?ResponseInterface $response = null;
 
-    public function emit(ResponseInterface $response)
+    public function emit(ResponseInterface $response): void
     {
         $this->response = $response;
     }
@@ -23,8 +20,9 @@ class ResponseCollector implements EmitterInterface
     public function getResponse(): ResponseInterface
     {
         if ($this->response === null) {
-            throw new LogicException('Response wasn\'t emitted yet');
+            throw new LogicException("Response wasn't emitted yet");
         }
+
         return $this->response;
     }
 

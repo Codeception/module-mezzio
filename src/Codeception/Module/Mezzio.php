@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Codeception\Module;
 
-use Codeception\Lib\Framework;
-use Codeception\TestInterface;
 use Codeception\Lib\Connector\Mezzio as MezzioConnector;
+use Codeception\Lib\Framework;
 use Codeception\Lib\Interfaces\DoctrineProvider;
+use Codeception\TestInterface;
+use Interop\Container\ContainerInterface;
+use Mezzio\Application;
 
 /**
  * This module allows you to run tests inside Mezzio.
@@ -49,16 +51,14 @@ class Mezzio extends Framework implements DoctrineProvider
     public $client;
 
     /**
-     * @var \Interop\Container\ContainerInterface
      * @deprecated Doesn't work as expected if Application is recreated between requests
      */
-    public $container;
+    public ContainerInterface $container;
 
     /**
-     * @var \Mezzio\Application
      * @deprecated Doesn't work as expected if Application is recreated between requests
      */
-    public $application;
+    public Application $application;
 
     public function _initialize()
     {
