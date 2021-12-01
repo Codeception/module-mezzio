@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Codeception\Module;
 
-use Codeception\Lib\Framework;
-use Codeception\TestInterface;
 use Codeception\Lib\Connector\Mezzio as MezzioConnector;
+use Codeception\Lib\Framework;
 use Codeception\Lib\Interfaces\DoctrineProvider;
+use Codeception\TestInterface;
 use Interop\Container\ContainerInterface;
 use Mezzio\Application;
 

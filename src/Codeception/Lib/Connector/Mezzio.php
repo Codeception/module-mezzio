@@ -5,21 +5,18 @@ declare(strict_types=1);
 namespace Codeception\Lib\Connector;
 
 use Codeception\Configuration;
-use Codeception\Lib\Connector\Mezzio\ResponseCollector;
 use Exception;
 use Interop\Container\ContainerInterface;
-use Symfony\Component\BrowserKit\AbstractBrowser as Client;
-use Symfony\Component\BrowserKit\Response;
-use Symfony\Component\BrowserKit\Request as BrowserKitRequest;
 use Laminas\Diactoros\ServerRequest;
-use Mezzio\Application;
 use Laminas\Diactoros\UploadedFile;
+use Mezzio\Application;
+use Symfony\Component\BrowserKit\AbstractBrowser as Client;
+use Symfony\Component\BrowserKit\Request as BrowserKitRequest;
+use Symfony\Component\BrowserKit\Response;
 
 class Mezzio extends Client
 {
     private Application $application;
-
-    private ResponseCollector $responseCollector;
 
     private ContainerInterface $container;
 
@@ -53,15 +50,13 @@ class Mezzio extends Client
             //required by WhoopsErrorHandler
             $serverParams['SCRIPT_NAME'] = 'Codeception';
         }
-        
+
         $cookies = $request->getCookies();
         $headers = $this->extractHeaders($request);
 
         //set cookie header because dflydev/fig-cookies reads cookies from header
         if (!empty($cookies)) {
-            $headers['cookie'] = implode(';', array_map(function ($key, $value) {
-                return "$key=$value";
-            }, array_keys($cookies), $cookies));
+            $headers['cookie'] = implode(';', array_map(fn($key, $value) => "$key=$value", array_keys($cookies), $cookies));
         }
 
         $mezzioRequest = new ServerRequest(
@@ -87,15 +82,7 @@ class Mezzio extends Client
             $application = $this->application;
         }
 
-        if (method_exists($application, 'handle')) {
-            // Mezzio v3
-            $response = $application->handle($mezzioRequest);
-        } else {
-            //Older versions
-            $application->run($mezzioRequest);
-            $response = $this->responseCollector->getResponse();
-            $this->responseCollector->clearResponse();
-        }
+        $response = $application->handle($mezzioRequest);
 
         chdir($cwd);
 
@@ -177,28 +164,7 @@ class Mezzio extends Client
 
         $this->application = $app;
 
-        $this->initResponseCollector();
-
         return $app;
-    }
-
-    private function initResponseCollector(): void
-    {
-        if (!method_exists($this->application, 'getEmitter')) {
-            //Does not exist in Mezzio v3
-            return;
-        }
-
-        /**
-         * @var Mezzio\Emitter\EmitterStack
-         */
-        $emitterStack = $this->application->getEmitter();
-        while (!$emitterStack->isEmpty()) {
-            $emitterStack->pop();
-        }
-
-        $this->responseCollector = new ResponseCollector;
-        $emitterStack->unshift($this->responseCollector);
     }
 
     public function getContainer(): ContainerInterface
@@ -209,7 +175,6 @@ class Mezzio extends Client
     public function setApplication(Application $application): void
     {
         $this->application = $application;
-        $this->initResponseCollector();
     }
 
     public function setConfig(array $config): void

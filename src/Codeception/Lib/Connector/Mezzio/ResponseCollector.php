@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Codeception\Lib\Connector\Mezzio;
 
+use Laminas\Diactoros\Response\EmitterInterface;
 use LogicException;
 use Psr\Http\Message\ResponseInterface;
-use Laminas\Diactoros\Response\EmitterInterface;
 
 class ResponseCollector implements EmitterInterface
 {
