@@ -10,6 +10,8 @@ use Codeception\Lib\Interfaces\DoctrineProvider;
 use Codeception\TestInterface;
 use Interop\Container\ContainerInterface;
 use Mezzio\Application;
+use PHPUnit\Framework\AssertionFailedError;
+use Symfony\Component\BrowserKit\AbstractBrowser;
 
 /**
  * This module allows you to run tests inside Mezzio.
@@ -48,7 +50,7 @@ class Mezzio extends Framework implements DoctrineProvider
     /**
      * @var \Codeception\Lib\Connector\Mezzio
      */
-    public $client;
+    public ?AbstractBrowser $client;
 
     /**
      * @deprecated Doesn't work as expected if Application is recreated between requests
@@ -101,7 +103,7 @@ class Mezzio extends Framework implements DoctrineProvider
     {
         $service = 'Doctrine\ORM\EntityManager';
         if (!$this->container->has($service)) {
-            throw new \PHPUnit\Framework\AssertionFailedError("Service $service is not available in container");
+            throw new AssertionFailedError("Service $service is not available in container");
         }
 
         return $this->container->get('Doctrine\ORM\EntityManager');
