@@ -9,6 +9,7 @@ jobs:
     strategy:
       matrix:
         php: [7.4, 8.0, 8.1]
+        diactoros: ['diactoros:^1.8.7', 'diactoros:^2.0']
 
     steps:
     - name: Checkout code
@@ -42,11 +43,11 @@ jobs:
 
     - name: Install dependencies on PHP 7
       if: matrix.php < 8
-      run: composer install --prefer-dist --no-progress --no-interaction --no-suggest
+      run: composer update --prefer-dist --no-progress --no-interaction --no-suggest --with='laminas/laminas-${{ matrix.diactoros }}'
 
     - name: Install dependencies on PHP 8
       if: matrix.php >= 8
-      run: composer install --prefer-dist --no-progress --no-interaction --ignore-platform-req=php
+      run: composer update --prefer-dist --no-progress --no-interaction --ignore-platform-req=php  --with='laminas/laminas-${{ matrix.diactoros }}'
 
     - name: Run test suite
       run: php vendor/bin/codecept run functional -c framework-tests
