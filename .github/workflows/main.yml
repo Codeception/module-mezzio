@@ -8,8 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [7.4, 8.0, 8.1]
-        diactoros: ['diactoros:^1.8.7', 'diactoros:^2.0']
+        php: [8.0]
 
     steps:
     - name: Checkout code
@@ -24,30 +23,21 @@ jobs:
     - name: Checkout Mezzio Sample
       uses: actions/checkout@v2
       with:
-        repository: Slamdunk/codeception-mezzio-tests
+        repository: Naktibalda/codeception-mezzio-tests
         path: framework-tests
+        ref: '5.0'
         submodules: recursive
 
-    - name: Install Mezzio Sample on PHP 7
-      if: matrix.php < 8
+    - name: Install Mezzio Sample
       run: composer update --no-dev --prefer-dist --no-interaction
       working-directory: framework-tests
 
-    - name: Install Mezzio Sample on PHP 8
-      if: matrix.php >= 8.0
-      run: composer update --no-dev --prefer-dist --no-interaction --ignore-platform-req=php
-      working-directory: framework-tests
 
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    - name: Install dependencies on PHP 7
-      if: matrix.php < 8
-      run: composer update --prefer-dist --no-progress --no-interaction --no-suggest --with='laminas/laminas-${{ matrix.diactoros }}'
-
-    - name: Install dependencies on PHP 8
-      if: matrix.php >= 8
-      run: composer update --prefer-dist --no-progress --no-interaction --ignore-platform-req=php  --with='laminas/laminas-${{ matrix.diactoros }}'
+    - name: Install dependencies
+      run: composer update --prefer-dist --no-progress --no-interaction --no-suggest
 
     - name: Run test suite
       run: php vendor/bin/codecept run functional -c framework-tests

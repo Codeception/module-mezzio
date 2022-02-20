@@ -8,6 +8,7 @@ use Codeception\Lib\Connector\Mezzio as MezzioConnector;
 use Codeception\Lib\Framework;
 use Codeception\Lib\Interfaces\DoctrineProvider;
 use Codeception\TestInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Interop\Container\ContainerInterface;
 use Mezzio\Application;
 use PHPUnit\Framework\AssertionFailedError;
@@ -39,9 +40,9 @@ use Symfony\Component\BrowserKit\AbstractBrowser;
 class Mezzio extends Framework implements DoctrineProvider
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $config = [
+    protected array $config = [
         'container'                          => 'config/container.php',
         'recreateApplicationBetweenTests'    => true,
         'recreateApplicationBetweenRequests' => false,
@@ -62,7 +63,7 @@ class Mezzio extends Framework implements DoctrineProvider
      */
     public Application $application;
 
-    public function _initialize()
+    public function _initialize(): void
     {
         $this->client = new MezzioConnector();
         $this->client->setConfig($this->config);
@@ -73,7 +74,7 @@ class Mezzio extends Framework implements DoctrineProvider
         }
     }
 
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->client = new MezzioConnector();
         $this->client->setConfig($this->config);
@@ -86,7 +87,7 @@ class Mezzio extends Framework implements DoctrineProvider
         }
     }
 
-    public function _after(TestInterface $test)
+    public function _after(TestInterface $test): void
     {
         //Close the session, if any are open
         if (session_status() == PHP_SESSION_ACTIVE) {
@@ -99,7 +100,7 @@ class Mezzio extends Framework implements DoctrineProvider
         parent::_after($test);
     }
 
-    public function _getEntityManager()
+    public function _getEntityManager(): EntityManagerInterface
     {
         $service = 'Doctrine\ORM\EntityManager';
         if (!$this->container->has($service)) {
