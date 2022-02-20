@@ -26,7 +26,7 @@ class Mezzio extends Client
      * @param BrowserKitRequest $request
      * @throws Exception
      */
-    public function doRequest($request)
+    public function doRequest($request): Response
     {
         $inputStream = fopen('php://memory', 'r+');
         $content = $request->getContent();
@@ -114,6 +114,9 @@ class Mezzio extends Client
         return $fileObjects;
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function extractHeaders(BrowserKitRequest $request): array
     {
         $headers = [];
@@ -123,7 +126,7 @@ class Mezzio extends Client
         foreach ($server as $header => $val) {
             $header = html_entity_decode(implode('-', array_map('ucfirst', explode('-', strtolower(str_replace('_', '-', $header))))), ENT_NOQUOTES);
 
-            if (strpos($header, 'Http-') === 0) {
+            if (str_starts_with($header, 'Http-')) {
                 $headers[substr($header, 5)] = $val;
             } elseif (isset($contentHeaders[$header])) {
                 $headers[$header] = $val;
