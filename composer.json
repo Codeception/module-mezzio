@@ -16,7 +16,7 @@
 		"codeception/lib-innerbrowser": "^3.0 | ^4.0",
 		"codeception/codeception": "^5.0.8",
 		"container-interop/container-interop": "^1.2",
-		"laminas/laminas-diactoros": "^2.0",
+		"laminas/laminas-diactoros": "^2.0 || ^3.0",
 		"mezzio/mezzio": "^3.0"
 	},
 	"require-dev": {
