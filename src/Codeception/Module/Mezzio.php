@@ -9,9 +9,9 @@ use Codeception\Lib\Framework;
 use Codeception\Lib\Interfaces\DoctrineProvider;
 use Codeception\TestInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Interop\Container\ContainerInterface;
 use Mezzio\Application;
 use PHPUnit\Framework\AssertionFailedError;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\BrowserKit\AbstractBrowser;
 
 /**
@@ -33,7 +33,7 @@ use Symfony\Component\BrowserKit\AbstractBrowser;
  * ## Public properties
  *
  * * application -  instance of `\Mezzio\Application`
- * * container - instance of `\Interop\Container\ContainerInterface`
+ * * container - instance of `\Psr\Container\ContainerInterface`
  * * client - BrowserKit client
  *
  */
