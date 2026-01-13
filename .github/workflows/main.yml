@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [8.0]
+        php: [8.2]
 
     steps:
     - name: Checkout code
@@ -20,24 +20,22 @@ jobs:
         php-version: ${{ matrix.php }}
         coverage: none
 
-    - name: Checkout Mezzio Sample
-      uses: actions/checkout@v2
-      with:
-        repository: Naktibalda/codeception-mezzio-tests
-        path: framework-tests
-        ref: '5.0'
-        submodules: recursive
-
     - name: Install Mezzio Sample
-      run: composer update --no-dev --prefer-dist --no-interaction
+      run: composer create-project mezzio/mezzio-skeleton --prefer-dist --no-interaction framework-tests
+
+    - name: Copy The Tests/Site
+      run: cp -rf src-test/{src,templates,test,tests,codeception.yml} framework-tests/
+
+    - name: Copy The Config
+      run: cp -f src-test/config/routes.php framework-tests/config/
+
+    - name: Remove The Default
+      run: composer remove mezzio/mezzio-fastroute
       working-directory: framework-tests
 
-
-    - name: Validate composer.json and composer.lock
-      run: composer validate
-
-    - name: Install dependencies
-      run: composer update --prefer-dist --no-progress --no-interaction --no-suggest
+    - name: Install The Dependencies
+      run: composer require -n mezzio/mezzio-laminasrouter mezzio/mezzio-laminasviewrenderer:^2 mezzio/mezzio-session-ext -n
+      working-directory: framework-tests
 
     - name: Run test suite
-      run: php vendor/bin/codecept run functional -c framework-tests
+      run: php -d register_argc_argv=On vendor/bin/codecept run functional -c framework-tests

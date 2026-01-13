@@ -6,10 +6,10 @@ namespace Codeception\Lib\Connector;
 
 use Codeception\Configuration;
 use Exception;
-use Interop\Container\ContainerInterface;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\UploadedFile;
 use Mezzio\Application;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\BrowserKit\AbstractBrowser as Client;
 use Symfony\Component\BrowserKit\Request as BrowserKitRequest;
 use Symfony\Component\BrowserKit\Response;
