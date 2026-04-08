@@ -6,7 +6,7 @@ namespace Codeception\Lib\Connector;
 
 use Codeception\Configuration;
 use Exception;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\UploadedFile;
 use Mezzio\Application;
